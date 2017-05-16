@@ -8,6 +8,7 @@ def index(request):
     return render(request, 'music/index.html', {'all_albums': all_albums})
     # We can use context = {'all_albums': all_albums}, but as its used only once, lets condense
 
+
 def detail(request, album_id):
     try:
         album = Album.objects.get(pk=album_id)
