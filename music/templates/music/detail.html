@@ -1,85 +1,18 @@
-{% load staticfiles %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="{% static 'music/style.css' %}" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+{% extends 'music/base.html' %}
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
+{% block title %}Album Deatils{% endblock %}
 
-        <!-- Header -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'music:index' %}">Viberr</a>
-        </div>
+{% block body %}
+    <img src="{{ album.album_logo }}">
 
-        <!-- Items -->
-        <div class="collapse navbar-collapse" id="topNavBar">
+    <h1>{{ album.album_title }}</h1>
+    <h2>{{ album.artist }}</h2>
 
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="{% url 'music:index' %}">
-                        <span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp; Albums
-                    </a>
-                </li>
-                <li class="">
-                    <a href="#">
-                        <span class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp; Songs
-                    </a>
-                </li>
-            </ul>
-
-            <form class="navbar-form navbar-left" role="search" method="get" action="#">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="q" value="">
-                </div>
-                <button type="submit" class="btn btn-default">Search</button>
-            </form>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                    <a href="{% url 'music:index' %}">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Album
-                    </a>
-                </li>
-                <li class="">
-                    <a href="{% url 'music:index' %}">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-
-    </div>
-</nav>
-
-
-<img src="{{ album.album_logo }}">
-
-<h1>{{ album.album_title }}</h1>
-<h2>{{ album.artist }}</h2>
-
-{% if error_message %}
-    <p><strong>{{ error_message }}</strong></p>
-{% endif %}
-
-<form action="{% url 'music:favorite' album.id %}" method="post">
-    {% csrf_token %}
-    {% for song in album.song_set.all %}
-        <input type="radio" id="song{{ forloop.counter }}" name="song" value="{{ song.id }}">
-        <label for="song{{ forloop.counter }}">
-            {{ song.song_title }}
-            {% if song.is_favorite %}
-                <img src="http://icons.iconseeker.com/png/16/developpers/star-7.png" />
-            {% endif %}
-        </label><br>
-    {% endfor %}
-    <input type="submit" value="Favorite">
-</form>
-
+        {% for song in album.song_set.all %}
+                {{ song.song_title }}
+                {% if song.is_favorite %}
+                    <img src="http://icons.iconseeker.com/png/16/developpers/star-7.png" />
+                {% endif %}
+            <br>
+        {% endfor %}
+{% endblock %}
