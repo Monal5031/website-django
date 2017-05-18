@@ -11,8 +11,10 @@
             {% for album in all_albums %}
                 <div class="col-sm-4 col-lg-2">
                     <div class="thumbnail">
+
+                    <!-- Album logo -->
                         <a href="{% url 'music:detail' album.id %}">
-                            <img src="{{ album.album_logo }}" class="img-responsive">
+                            <img src="{{ album.album_logo.url }}" class="img-responsive">
                         </a>
                         <div class="caption">
                             <h2>{{ album.album_title }}</h2>
@@ -43,7 +45,7 @@
         {% else %}
             <div class="col-sm-12">
                 <br>
-                <a href="{% url 'music:create_album' %}">
+                <a href="#">
                     <button type="button" class="btn btn-success">
                         <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Album
                     </button>
